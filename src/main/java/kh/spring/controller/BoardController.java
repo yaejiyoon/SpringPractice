@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.interfaces.BoardService;
+
 
 @Controller
 public class BoardController {
@@ -61,14 +63,22 @@ public class BoardController {
 
 	@RequestMapping("/writeProc.do")
 	public ModelAndView toWriteProc(@ModelAttribute BoardDTO dto, HttpServletRequest req, HttpServletResponse res) {
+		
+		String realPath = req.getSession().getServletContext().getRealPath("/files/");
+		
+		int maxSize = 1024*1024*100; //100메가
+		String enc = "utf8";
+		
+		
+		System.out.println(realPath);
+		
 		System.out.println("writeProc: " + dto.getTitle() + " : " + dto.getContents());
 		String asd = req.getParameter("title");
 		System.out.println("asd:"+asd);
 		
 		String loginId = (String) req.getSession().getAttribute("loginId");
 
-		// dto.setWriter(loginId);
-		dto.setWriter("최인형");
+		dto.setWriter(loginId);
 		dto.setIp(req.getRemoteAddr());
 
 		int result = service.write(dto);
