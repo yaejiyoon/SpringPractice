@@ -91,7 +91,7 @@ public class BoardController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
-		mav.setViewName("index.jsp");
+		mav.setViewName("article.do?seq="+seq+"");
 		
 		return mav;
 	}
