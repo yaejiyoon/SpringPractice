@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 작성</title>
+<title>게시글 수정</title>
 <style>
 table {
 	width: 800px;
@@ -25,35 +25,39 @@ textarea {
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-	$(document).ready(function() {
-		var cnt = 0;
-		$('#add').click(function() {
-			cnt++;
-			console.log(cnt);
-			$('#appendFile').after(
-					"<tr id='appendFile' align=center><td width=20% height=30><label>첨부파일</label></td><td><input type='file' name='file"+cnt+"'></td></tr>");
-			})
-			
-		$("#cancel").click(function(){
-			$(location).attr('href','index.do');
-		})
-	})
+	$(document)
+			.ready(
+					function() {
+						var cnt = 0;
+						$('#add')
+								.click(
+										function() {
+											cnt++;
+											console.log(cnt);
+											$('#appendFile')
+													.after(
+															"<tr id='appendFile' align=center><td width=20% height=30><label>첨부파일</label></td><td><input type='file' name='file"+cnt+"'></td></tr>");
+										})
+
+						$("#cancel").click(function() {
+							$(location).attr('href', 'index.do');
+						})
+					})
 </script>
 </head>
 <body>
-		<form action="writeProc.do" method="post">
+	<form action="modifyProc.do" method="post">
 		<table border=1>
 			<tr>
 				<th colspan=5>자유게시판</th>
 			</tr>
 			<tr align=center>
 				<td width=20% height=30><label>제목</label></td>
-				<td><input type="text" name="title" placeholder="제목을 입력하세요."></td>
+				<td><input type="text" name="title" value=${dto.getTitle() }></td>
 			</tr>
 			<tr>
 				<td align=center><label>내용</label></td>
-				<td colspan=4 height=300 align=center><textarea name="contents"
-						placeholder="내용을 입력하세요."></textarea></td>
+				<td colspan=4 height=300 align=center><textarea name="contents">${dto.getContents() }</textarea></td>
 			</tr>
 			<tr id="appendFile">
 				<td colspan=5><button type="button" id="add"
@@ -66,11 +70,12 @@ textarea {
 
 			<tr>
 				<td colspan=5 align=right>
-					<button>글 등록</button>
+					<button>글 수정</button>
 					<button type="button" id="cancel">취소</button>
 				</td>
 			</tr>
 		</table>
+		<input type="hidden" name="seq" value=${dto.getSeq() }>
 	</form>
 </body>
 </html>
