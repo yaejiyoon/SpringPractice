@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,7 +25,7 @@
 			<c:forEach var="tmp" items="${result}">
 				<tr align=center>
 					<td width=30>${tmp.seq}</td>
-					<td width=150 align=center><a href="articleView.jsp?seq=${tmp.seq}">${tmp.title}</td>
+					<td width=150 align=center><a href="article.do?seq=${tmp.seq}">${tmp.title}</td>
 					<td>${tmp.writer}</td>
 					<td>${tmp.writedate}</td>
 					<td>${tmp.viewcount}</td>
@@ -47,7 +47,10 @@
 			<td><button type="button" id="searchBt">search</button></td>
 		</tr>
 		<tr>
-			<td colspan="6" align=right><button type=button id=write>글쓰기</button></td>
+			<td colspan="6" align=right>
+				<button type=button id=write
+				onclick="location.href='write.do'">글쓰기</button>
+			</td>
 		</tr>
 
 	</table>

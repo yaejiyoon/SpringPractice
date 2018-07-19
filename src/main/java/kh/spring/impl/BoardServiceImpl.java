@@ -20,4 +20,19 @@ public class BoardServiceImpl implements BoardService{
 		return dao.getAllArticles(); 
 	}
 
+	@Override
+	public int write(BoardDTO dto) {
+		return dao.write(dto);
+	}
+
+	@Override
+	public int modify(BoardDTO dto) {
+		return dao.modify(dto);
+	}
+
+	@Override
+	public BoardDTO getArticle(int seq) {
+		return dao.getArticle(seq);
+	}
+
 }

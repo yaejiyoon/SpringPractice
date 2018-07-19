@@ -72,11 +72,11 @@ a:hover {
 			</tr>
 			<tr align=center>
 				<td width=20% height=30><label>작성자:</label></td>
-				<td align=left colspan=4></td>
+				<td align=left colspan=4>${dto.getWriter() }</td>
 			</tr>
 			<tr align=center>
 				<td width=20% height=30><label>제목:</label></td>
-				<td align=left colspan=4></td>
+				<td align=left colspan=4>${dto.getTitle() }</td>
 			</tr>
 <%-- 			<c:if test="${not empty flist }"> --%>
 				<c:forEach var="flist" items="">
@@ -91,19 +91,19 @@ a:hover {
 
 			<tr>
 				<td align=center><label>내용:</label></td>
-				<td height=270 align=left colspan=4></td>
+				<td height=270 align=left colspan=4>${dto.getContents() }</td>
 			</tr>
 
 			<tr>
 				<td colspan=5 align=right>
-<%-- 				<c:if test="${loginId eq bdto.writer }"> --%>
+<%-- 				<c:if test="${sessionScope.loginId eq dto.getWriter() }"> --%>
 						<button type="button"
-							onclick="location.href='modifyWritingForm.bo?seq='">수정</button>
+							onclick="location.href='modify.do?seq=${dto.getSeq()}'">수정</button>
 						<button type="button" onclick="delFunc()">삭제</button>
 
 <%-- 					</c:if> --%>
 					<button type="button"
-						onclick="location.href='board.bo?titlesearch='">돌아가기</button></td>
+						onclick="location.href='boardList.do'">돌아가기</button></td>
 			</tr>
 			<tr align=center>
 				<td colspan=4 width=70%><textarea id="commentArea"
