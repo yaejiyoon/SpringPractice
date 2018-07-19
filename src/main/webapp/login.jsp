@@ -48,7 +48,7 @@
 		});
 		
 		$("#board").click(function(){
-			$(location).attr("href","modi.do");
+			$(location).attr("href","boardList.do");
 		});
 		
 	})
