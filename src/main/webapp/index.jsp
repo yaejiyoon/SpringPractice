@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<a href="article.do">게시글</a>          
+	<a href="write.do">게시글 작성</a>                      
 </body>
 </html>
