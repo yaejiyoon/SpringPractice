@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.interfaces.BoardService;
 
 @Controller
@@ -43,8 +44,11 @@ public class BoardController {
 	public ModelAndView toArticle(HttpServletRequest req) {
 		int seq = Integer.parseInt(req.getParameter("seq"));
 		BoardDTO dto = service.getArticle(seq);
+		
+		List<CommentDTO> commentList = service.commentsList(seq);
 
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("commentList", commentList);
 		mav.addObject("dto", dto);
 		mav.setViewName("article.jsp");
 		
@@ -67,8 +71,7 @@ public class BoardController {
 		
 		String loginId = (String) req.getSession().getAttribute("loginId");
 
-		// dto.setWriter(loginId);
-		dto.setWriter("최인형");
+		dto.setWriter(loginId);
 		dto.setIp(req.getRemoteAddr());
 
 		int result = service.write(dto);
@@ -105,4 +108,20 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("/comment.do")
+	public ModelAndView comment(CommentDTO dto) {
+		int result = service.comment(dto);
+		int seq = dto.getArticleNo();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("seq", seq);
+		mav.addObject("result", result);
+		mav.setViewName("commentProc.jsp");
+		
+		return mav;
+	}
+	
+	
+	
 }

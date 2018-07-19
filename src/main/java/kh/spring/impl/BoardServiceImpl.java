@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.interfaces.BoardDAO;
 import kh.spring.interfaces.BoardService;
 
@@ -33,6 +34,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardDTO getArticle(int seq) {
 		return dao.getArticle(seq);
+	}
+
+	@Override
+	public int comment(CommentDTO dto) {
+		return dao.comment(dto);
+	}
+
+	@Override
+	public List<CommentDTO> commentsList(int seq) {
+		return dao.commentsList(seq);
 	}
 
 }

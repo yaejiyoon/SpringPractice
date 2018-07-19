@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.interfaces.BoardDAO;
 
 @Component
@@ -70,6 +71,36 @@ public class BoardDAOImpl implements BoardDAO{
 				return tmp;
 			}
 		}, seq);
+	}
+
+	@Override
+	public int comment(CommentDTO dto) {
+		String sql = "insert into comments values(?,comment_seq.nextval,?,?,sysdate,'192.168')";
+		return template.update(sql,dto.getArticleNo(),dto.getComment_text(),dto.getWriter());
+	}
+
+	@Override
+	public List<CommentDTO> commentsList(int seq) {
+		String sql = "select * from comments where article_no = ?";
+		template.queryForObject(sql, new RowMapper<CommentDTO>() {
+
+		List<CommentDTO> result = null;
+			@Override
+			public CommentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BoardDTO tmp = new BoardDTO();
+				tmp.setSeq(rs.getInt("seq"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setContents(rs.getString("contents"));
+				tmp.setViewcount(rs.getInt("viewcount"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setWritedate(rs.getString("writedate"));
+				tmp.setIp(rs.getString("ip"));
+				
+				result.add(tmp);
+				return tmp;
+			}
+		}, seq);
+		return null;
 	}
 
 }
