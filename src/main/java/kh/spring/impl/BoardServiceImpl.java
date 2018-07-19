@@ -35,4 +35,9 @@ public class BoardServiceImpl implements BoardService{
 		return dao.getArticle(seq);
 	}
 
+	@Override
+	public int nextSeq() {
+		return dao.nextSeq();
+	}
+
 }

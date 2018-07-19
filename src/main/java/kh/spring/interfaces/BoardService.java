@@ -13,4 +13,5 @@ public interface BoardService {
 
 	public BoardDTO getArticle(int seq);
 
+	public int nextSeq();
 }
