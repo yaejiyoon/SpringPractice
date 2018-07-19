@@ -19,10 +19,24 @@ public class BoardController {
 	@RequestMapping("/boardList.do")
 	public ModelAndView toBoardList() {
 		List<BoardDTO> result = service.getAllArticles();
+	@RequestMapping("/article.do")
+	public ModelAndView toArticle() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("article.jsp");
+		return mav;
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
 		mav.setViewName("boardList.jsp");
 		return mav;
 	}
+	}
+	
+	@RequestMapping("/write.do")
+	public ModelAndView toWrite() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("write.jsp");
+		return mav;
+	}
+		
 }
