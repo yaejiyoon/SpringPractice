@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:choose>
-	<c:when test="${result > 0 }">
-		입력성공
-	</c:when>
-	<c:otherwise>
-		입력실패
-	</c:otherwise>
-</c:choose>
+	<c:choose>
+		<c:when test="${result > 0 }">
+				<script>
+					location.href = "article.do?seq="+${nseq}+"";
+				</script>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>
