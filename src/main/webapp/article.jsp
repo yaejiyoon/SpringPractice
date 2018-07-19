@@ -103,7 +103,7 @@ a:hover {
 
 <%-- 					</c:if> --%>
 					<button type="button"
-						onclick="location.href='board.bo?titlesearch='">돌아가기</button></td>
+						onclick="location.href='boardList.do'">돌아가기</button></td>
 			</tr>
 			<tr align=center>
 				<td colspan=4 width=70%><textarea id="commentArea"

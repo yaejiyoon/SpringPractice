@@ -1,12 +1,9 @@
 package kh.spring.controller;
 
-import javax.servlet.ServletRequest;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DaoSupport;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,6 @@ import kh.spring.interfaces.BoardService;
 @Controller
 public class BoardController {
 	
-	@Autowired
-	private BoardService service;
 
 	@Autowired
 	private BoardService service;

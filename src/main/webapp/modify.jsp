@@ -39,9 +39,6 @@ textarea {
 															"<tr id='appendFile' align=center><td width=20% height=30><label>첨부파일</label></td><td><input type='file' name='file"+cnt+"'></td></tr>");
 										})
 
-						$("#cancel").click(function() {
-							$(location).attr('href', 'index.do');
-						})
 					})
 </script>
 </head>
@@ -71,7 +68,7 @@ textarea {
 			<tr>
 				<td colspan=5 align=right>
 					<button>글 수정</button>
-					<button type="button" id="cancel">취소</button>
+					<button type="button" onclick="location.href='article.do?seq=${dto.getSeq()}'">취소</button>
 				</td>
 			</tr>
 		</table>

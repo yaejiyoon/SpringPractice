@@ -4,13 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.management.Query;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,9 +15,6 @@ import kh.spring.interfaces.BoardDAO;
 @Component
 public class BoardDAOImpl implements BoardDAO{
 	
-	@Autowired
-	private JdbcTemplate template;
-
 	@Autowired
 	private JdbcTemplate template;
 
