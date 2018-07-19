@@ -15,4 +15,6 @@ public interface BoardDAO {
 	
 	public int nextSeq();
 	
+	public int delete(int seq);
+	
 }

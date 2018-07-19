@@ -76,7 +76,6 @@ textarea {
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="nseq" value="${nseq}">
 	</form>
 </body>
 </html>

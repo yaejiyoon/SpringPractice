@@ -40,4 +40,9 @@ public class BoardServiceImpl implements BoardService{
 		return dao.nextSeq();
 	}
 
+	@Override
+	public int delete(int seq) {
+		return dao.delete(seq);
+	}
+
 }
