@@ -6,7 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#boardList").click(function() {
+			$(location).attr("href","boardList.do");
+		})
+	})
+</script>
 <body>
-
+	<div align="center">
+		<button id="boardList">Board List</button>
+	</div>
 </body>
 </html>
