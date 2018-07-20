@@ -37,6 +37,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public int nextSeq() {
+		return dao.nextSeq();
+	}
+
+	@Override
+	public int delete(int seq) {
+		return dao.delete(seq);
+	}
+
+	@Override
 	public int comment(CommentDTO dto) {
 		return dao.comment(dto);
 	}

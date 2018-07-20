@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +10,16 @@
 <body>
 	<c:choose>
 		<c:when test="${result > 0 }">
-				<script>
-					location.href = "article.do?seq="+${nseq}+"";
-				</script>
+			<script>
+				alert("삭제 성공!");
+				location.href="boardList.do";
+			</script>
 		</c:when>
 		<c:otherwise>
+			<script>
+				alert("삭제 실패!");
+				location.href="boardList.do";
+			</script>
 		</c:otherwise>
 	</c:choose>
 </body>

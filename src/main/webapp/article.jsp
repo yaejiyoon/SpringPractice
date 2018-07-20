@@ -1,5 +1,4 @@
 <%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -58,7 +57,7 @@ a:hover {
 	var delFunc = function() {
 		var con = confirm("삭제하시겠습니까?")
 		if (con) {
-			location.href = "deleteWriting.bo?seq=${bdto.seq}";
+			location.href = "delete.do?seq=${dto.seq}";
 		} else {
 			location.reload();
 		}
@@ -79,16 +78,15 @@ a:hover {
 				<td width=20% height=30><label>제목:</label></td>
 				<td align=left colspan=4>${dto.getTitle() }</td>
 			</tr>
-<%-- 			<c:if test="${not empty flist }"> --%>
-				<c:forEach var="flist" items="">
-					<tr align=center>
-						<td width=20% height=30><label>첨부된 파일</label></td>
-						<td align=left colspan=4><a
-							href="../Download?fileName=">
-								</a></td>
-					</tr>
-				</c:forEach>
-<%-- 			</c:if> --%>
+			<%-- 			<c:if test="${not empty flist }"> --%>
+			<c:forEach var="flist" items="">
+				<tr align=center>
+					<td width=20% height=30><label>첨부된 파일</label></td>
+					<td align=left colspan=4><a href="../Download?fileName=">
+					</a></td>
+				</tr>
+			</c:forEach>
+			<%-- 			</c:if> --%>
 
 			<tr>
 				<td align=center><label>내용:</label></td>
@@ -97,14 +95,12 @@ a:hover {
 
 			<tr>
 				<td colspan=5 align=right>
-<%-- 				<c:if test="${sessionScope.loginId eq dto.getWriter() }"> --%>
-						<button type="button"
-							onclick="location.href='modify.do?seq=${dto.getSeq()}'">수정</button>
-						<button type="button" onclick="delFunc()">삭제</button>
-
-<%-- 					</c:if> --%>
+				<c:if test="${sessionScope.loginId eq dto.getWriter() }">
 					<button type="button"
-						onclick="location.href='boardList.do'">돌아가기</button></td>
+						onclick="location.href='modify.do?seq=${dto.getSeq()}'">수정</button>
+					<button type="button" onclick="delFunc()">삭제</button>
+				</c:if>
+					<button type="button" onclick="location.href='boardList.do'">돌아가기</button></td>
 			</tr>
 			
 		<%int count=0; %>
@@ -143,19 +139,16 @@ a:hover {
 				<td><button type="button" id="commentBtn">댓글 등록</button></td>
 			</tr>
 
-<%-- 			<c:forEach var="clist" items="${clist }"> --%>
-				<tr>
-					<td id="changetd" colspan=4 width=70%><span>&nbsp;&nbsp;</span>
-						<br></td>
+			<%-- 			<c:forEach var="clist" items="${clist }"> --%>
+			<tr>
+				<td id="changetd" colspan=4 width=70%><span>&nbsp;&nbsp;</span>
+					<br></td>
 
-					<td id="changebtntd" align=center><a href="#" id="change">수정</a>&nbsp;&nbsp;
-						<a
-						href="commentdel.bo?seq=&comment_seq=&title=">삭제</a></td>
-				</tr>
-<%-- 			</c:forEach> --%>
+				<td id="changebtntd" align=center><a href="#" id="change">수정</a>&nbsp;&nbsp;
+					<a href="commentdel.bo?seq=&comment_seq=&title=">삭제</a></td>
+			</tr>
+			<%-- 			</c:forEach> --%>
 		</table>
-		<input type="hidden" id="seq" name="seq" value="">
-		<input type="hidden" id="title" name="title" value="">
 	</form>
 
 </body>
