@@ -109,11 +109,11 @@ a:hover {
 		<c:forEach var="commentList" items="${commentList }">
 			<tr>
 				<%count++; %>
-				<td>${commentList.comment_seq }
+				<td>${commentList.writer }
 				<td colspan="2" style='width:300px;' id="text<%=count %>">${commentList.comment_text }
 				<td>${commentList.writeDate }
 				
-				<c:if test="${session eq writer}">
+				<c:if test="${sessionScope.loginId eq commentList.writer}">
 					<td id=buttonTD<%=count %>>
 					<button id=commentRemove<%=count %> type=button>삭제</button>
 					
@@ -134,7 +134,7 @@ a:hover {
 			<tr align=center>
 				<td colspan=4 width=70%>
 				<input type=hidden value="${dto.seq }" name="articleNo">
-				<input type=hidden value="${dto.seq }" name="writer">
+				<input type=hidden value="${dto.writer }" name="writer">
 				<textarea id="commentArea" name="comment_text" placeholder="댓글쓰기"></textarea></td>
 				<td><button type="button" id="commentBtn">댓글 등록</button></td>
 			</tr>

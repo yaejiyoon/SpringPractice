@@ -50,7 +50,6 @@
 		$("#board").click(function(){
 			$(location).attr("href","boardList.do");
 		});
-		
 	})
 </script>
 </head>
@@ -72,7 +71,6 @@
 				<table border="1px">
 				
 					<tr>
-					
 						<td colspan="5">${sessionScope.loginId}님 환영합니다.
 					</tr>
 					<tr>
