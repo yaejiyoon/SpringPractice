@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +65,7 @@ a:hover {
 </script>
 </head>
 <body>
-	<form action="comment.bo" method="post" id="commentPost">
+	<form action="comment.do" method="post" id="commentPost">
 		<table border=1>
 			<tr>
 				<th colspan=5>자유게시판</th>
@@ -101,9 +102,40 @@ a:hover {
 				</c:if>
 					<button type="button" onclick="location.href='boardList.do'">돌아가기</button></td>
 			</tr>
+			
+		<%int count=0; %>
+
+	<c:if test="${fn:length(commentList)>0}">
+		<c:forEach var="commentList" items="${commentList }">
+			<tr>
+				<%count++; %>
+				<td>${commentList.comment_seq }
+				<td colspan="2" style='width:300px;' id="text<%=count %>">${commentList.comment_text }
+				<td>${commentList.writeDate }
+				
+				<c:if test="${session eq writer}">
+					<td id=buttonTD<%=count %>>
+					<button id=commentRemove<%=count %> type=button>삭제</button>
+					
+					<script>
+					
+						document.getElementById('commentRemove<%=count %>').onclick = function(){
+							location.href='commentRemove.do?articleNo=${commentList.articleNo}&commentNo=${commentList.comment_seq}';
+						}
+					</script>
+					
+				</c:if>
+			</tr>
+		</c:forEach>
+	</c:if>
+			
+			
+			
 			<tr align=center>
-				<td colspan=4 width=70%><textarea id="commentArea"
-						name="commentArea" placeholder="댓글쓰기"></textarea></td>
+				<td colspan=4 width=70%>
+				<input type=hidden value="${dto.seq }" name="articleNo">
+				<input type=hidden value="${dto.seq }" name="writer">
+				<textarea id="commentArea" name="comment_text" placeholder="댓글쓰기"></textarea></td>
 				<td><button type="button" id="commentBtn">댓글 등록</button></td>
 			</tr>
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.interfaces.BoardService;
 
 @Controller
@@ -53,8 +54,12 @@ public class BoardController {
 	public ModelAndView toArticle(HttpServletRequest req) {
 		int seq = Integer.parseInt(req.getParameter("seq"));
 		BoardDTO dto = service.getArticle(seq);
+		
+		List<CommentDTO> commentList = service.commentsList(seq);
+		System.out.println("commentList : "+commentList.size());
 
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("commentList", commentList);
 		mav.addObject("dto", dto);
 		mav.setViewName("article.jsp");
 
@@ -111,7 +116,7 @@ public class BoardController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
-		mav.setViewName("article.do?seq=" + seq + "");
+		mav.setViewName("article.do?seq=" + seq );
 
 		return mav;
 	}
@@ -125,4 +130,32 @@ public class BoardController {
 		mav.setViewName("delete.jsp");
 		return mav;
 	}
+	
+	@RequestMapping("/comment.do")
+	public ModelAndView comment(CommentDTO dto) {
+		int result = service.comment(dto);
+		int seq = dto.getArticleNo();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("seq", seq);
+		mav.addObject("result", result);
+		mav.setViewName("commentProc.jsp");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/commentRemove.do")
+	public ModelAndView commentRemove(String articleNo, String commentNo) {
+		int article_no = Integer.parseInt(articleNo);
+		int comment_seq = Integer.parseInt(commentNo);
+		
+		int result = service.commentRemove(article_no, comment_seq);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("result", result);
+		mav.setViewName("article.do?seq=" + article_no );
+		
+		return mav;
+	}
+	
 }
