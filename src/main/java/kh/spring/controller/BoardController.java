@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.BoardDTO;
@@ -51,7 +52,6 @@ public class BoardController {
 
 	@RequestMapping("/write.do")
 	public ModelAndView toWrite() {
-	
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("write.jsp");
 		return mav;
@@ -66,8 +66,9 @@ public class BoardController {
 		dto.setWriter(loginId);
 		dto.setIp(req.getRemoteAddr());
 
-		int nseq = service.nextSeq()+1;
-		
+		int nseq = service.nextSeq();
+		System.out.println("nseq = " + nseq);
+		dto.setSeq(nseq);
 		int result = service.write(dto);
 
 		ModelAndView mav = new ModelAndView();
@@ -101,6 +102,16 @@ public class BoardController {
 		mav.addObject("result", result);
 		mav.setViewName("article.do?seq=" + seq + "");
 
+		return mav;
+	}
+
+	@RequestMapping("/delete.do")
+	public ModelAndView toDelete(@RequestParam int seq) {
+		int result = service.delete(seq);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("result", result);
+		mav.setViewName("delete.jsp");
 		return mav;
 	}
 }

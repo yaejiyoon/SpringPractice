@@ -40,9 +40,9 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int write(BoardDTO dto) {
-		String sql = "insert into board values(board_seq.nextval, ?,?,?,sysdate,?,?)";
-		return template.update(sql, dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getViewcount(),
-				dto.getIp());
+		String sql = "insert into board values(?,?,?,?,sysdate,?,?)";
+		return template.update(sql, dto.getSeq(), dto.getTitle(), dto.getContents(), dto.getWriter(),
+				dto.getViewcount(), dto.getIp());
 	}
 
 	@Override
@@ -76,9 +76,15 @@ public class BoardDAOImpl implements BoardDAO {
 	public int nextSeq() {
 		String sql = "select board_seq.nextval from dual";
 		int seq = template.queryForObject(sql, Integer.class);
-		System.out.println("boardDao:" + seq);
-		
+
 		return seq;
+	}
+
+	@Override
+	public int delete(int seq) {
+		String sql = "delete from board where seq = ?";
+		int result = template.update(sql, seq);
+		return result;
 	}
 
 }
