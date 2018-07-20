@@ -1,5 +1,9 @@
 package kh.spring.controller;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,14 +68,6 @@ public class BoardController {
 
 	@RequestMapping("/writeProc.do")
 	public ModelAndView toWriteProc(@ModelAttribute BoardDTO dto, HttpServletRequest req, HttpServletResponse res) {
-		
-		String realPath = req.getSession().getServletContext().getRealPath("/files/");
-		
-		int maxSize = 1024*1024*100; //100메가
-		String enc = "utf8";
-		
-		
-		System.out.println(realPath);
 		
 		System.out.println("writeProc: " + dto.getTitle() + " : " + dto.getContents());
 		String asd = req.getParameter("title");
