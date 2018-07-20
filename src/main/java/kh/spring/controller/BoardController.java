@@ -45,6 +45,7 @@ public class BoardController {
 		BoardDTO dto = service.getArticle(seq);
 		
 		List<CommentDTO> commentList = service.commentsList(seq);
+		System.out.println("commentList : "+commentList.size());
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("commentList", commentList);
@@ -104,7 +105,7 @@ public class BoardController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
-		mav.setViewName("article.do?seq=" + seq + "");
+		mav.setViewName("article.do?seq=" + seq );
 
 		return mav;
 	}
@@ -132,6 +133,18 @@ public class BoardController {
 		return mav;
 	}
 	
-	
+	@RequestMapping("/commentRemove.do")
+	public ModelAndView commentRemove(String articleNo, String commentNo) {
+		int article_no = Integer.parseInt(articleNo);
+		int comment_seq = Integer.parseInt(commentNo);
+		
+		int result = service.commentRemove(article_no, comment_seq);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("result", result);
+		mav.setViewName("article.do?seq=" + article_no );
+		
+		return mav;
+	}
 	
 }

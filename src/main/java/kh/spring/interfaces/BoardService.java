@@ -21,4 +21,6 @@ public interface BoardService {
 	public int nextSeq();
 	
 	public int delete(int seq);
+	
+	public int commentRemove(int articleNo, int comment_seq);
 }

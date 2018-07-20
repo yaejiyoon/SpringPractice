@@ -109,8 +109,8 @@ a:hover {
 		<c:forEach var="commentList" items="${commentList }">
 			<tr>
 				<%count++; %>
-				<td>${commentList.writer }
-				<td style='width:300px;' id="text<%=count %>">${commentList.comment_text }
+				<td>${commentList.comment_seq }
+				<td colspan="2" style='width:300px;' id="text<%=count %>">${commentList.comment_text }
 				<td>${commentList.writeDate }
 				
 				<c:if test="${session eq writer}">
@@ -119,8 +119,8 @@ a:hover {
 					
 					<script>
 					
-						document.getElementById("commentRemove<%=count %>").onclick = function(){
-							location.href="remove.com?articleNo=${item2.articleNo}&commentNo=${item2.comment_seq}";
+						document.getElementById('commentRemove<%=count %>').onclick = function(){
+							location.href='commentRemove.do?articleNo=${commentList.articleNo}&commentNo=${commentList.comment_seq}';
 						}
 					</script>
 					

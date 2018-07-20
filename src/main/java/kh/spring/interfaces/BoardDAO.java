@@ -18,8 +18,9 @@ public interface BoardDAO {
 	
 	public int delete(int seq);
 	
-	
 	public int comment(CommentDTO dto);
 	
 	public List<CommentDTO> commentsList(int seq);
+	
+	public int commentRemove(int articleNo, int comment_seq);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.CommentDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.interfaces.BoardDAO;
 
 @Component
@@ -94,28 +95,37 @@ public class BoardDAOImpl implements BoardDAO {
 		return template.update(sql,dto.getArticleNo(),dto.getComment_text(),dto.getWriter());
 	}
 
+	
 	@Override
 	public List<CommentDTO> commentsList(int seq) {
 		String sql = "select * from comments where article_no = ?";
-		template.queryForObject(sql, new RowMapper<CommentDTO>() {
 
-		List<CommentDTO> result = null;
+		List<CommentDTO> result = template.query(sql, new RowMapper<CommentDTO>() {
+
 			@Override
-			public CommentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				BoardDTO tmp = new BoardDTO();
-				tmp.setSeq(rs.getInt("seq"));
-				tmp.setTitle(rs.getString("title"));
-				tmp.setContents(rs.getString("contents"));
-				tmp.setViewcount(rs.getInt("viewcount"));
-				tmp.setWriter(rs.getString("writer"));
-				tmp.setWritedate(rs.getString("writedate"));
-				tmp.setIp(rs.getString("ip"));
+			public CommentDTO mapRow(ResultSet rs, int rownum) throws SQLException {
+				CommentDTO tmp = new CommentDTO();
 				
-				result.add(tmp);
+				tmp.setArticleNo(rs.getInt("article_No"));
+	            tmp.setComment_seq(rs.getInt("comment_seq"));
+	            tmp.setComment_text(rs.getString("comment_text"));
+	            tmp.setWriter(rs.getString("writer"));
+	            tmp.setWriteDate(rs.getString("writeDate"));
+	            tmp.setIp(rs.getString("ip"));
+	            
 				return tmp;
 			}
-		}, seq);
-		return null;
+			
+		},seq);
+		
+		return result;
+		
+	}
+
+	@Override
+	public int commentRemove(int articleNo, int comment_seq) {
+		String sql = "delete from comments where article_no=? and comment_seq=?";
+		return template.update(sql,articleNo,comment_seq);
 	}
 
 }

@@ -56,4 +56,9 @@ public class BoardServiceImpl implements BoardService{
 		return dao.commentsList(seq);
 	}
 
+	@Override
+	public int commentRemove(int articleNo, int comment_seq) {
+		return dao.commentRemove(articleNo, comment_seq);
+	}
+
 }
