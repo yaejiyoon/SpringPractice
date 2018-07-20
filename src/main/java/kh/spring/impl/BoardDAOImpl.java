@@ -2,7 +2,9 @@ package kh.spring.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.interfaces.BoardDAO;
 
 @Component
@@ -37,6 +40,7 @@ public class BoardDAOImpl implements BoardDAO {
 		});
 		return result;
 	}
+	
 
 	@Override
 	public int write(BoardDTO dto) {
@@ -71,6 +75,26 @@ public class BoardDAOImpl implements BoardDAO {
 			}
 		}, seq);
 	}
+	
+	@Override
+	public List<FilesDTO> getFiles(int article_no) {
+		String sql = "select * from files where article_no = ?";
+		List<FilesDTO> result = template.query(sql, new RowMapper<FilesDTO>() {
+
+			@Override
+			public FilesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				FilesDTO tmp = new FilesDTO();
+				tmp.setSeq(rs.getInt("seq"));
+				tmp.setArticle_no(rs.getInt("article_no"));
+				tmp.setOriginal_file_name(rs.getString("original_file_name"));
+				tmp.setSave_file_name(rs.getString("save_file_name"));
+				return tmp;
+			}
+			
+		}, article_no);
+		return result;
+	}
+	
 
 	@Override
 	public int nextSeq() {
@@ -87,4 +111,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return result;
 	}
 
+	@Override
+	public int uploadFile(FilesDTO dto) {
+		String sql = "insert into files values(files_seq.nextval,?,?,?) ";
+		return template.update(sql, dto.getArticle_no(), dto.getOriginal_file_name(), dto.getSave_file_name());
+	}
+
+	
 }

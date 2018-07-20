@@ -106,6 +106,11 @@ a:hover {
 						name="commentArea" placeholder="댓글쓰기"></textarea></td>
 				<td><button type="button" id="commentBtn">댓글 등록</button></td>
 			</tr>
+			<c:forEach var="files" items="${files}">
+				<tr align=center>
+					<td colspan=5 width=100%><a href="">${files.getOriginal_file_name()}</a></td>
+				</tr>
+			</c:forEach>
 
 			<%-- 			<c:forEach var="clist" items="${clist }"> --%>
 			<tr>

@@ -3,6 +3,7 @@ package kh.spring.interfaces;
 import java.util.List;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.FilesDTO;
 
 public interface BoardService {
 	public List<BoardDTO> getAllArticles();
@@ -16,4 +17,10 @@ public interface BoardService {
 	public int nextSeq();
 	
 	public int delete(int seq);
+	
+	// File Upload
+	
+	public int uploadFile(FilesDTO dto);
+	
+	public List<FilesDTO> getFiles(int article_no);
 }

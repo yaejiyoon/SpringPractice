@@ -23,6 +23,7 @@ public class MemberDAOImpl implements MemberDAO{
 		String sql = "insert into member values(member_seq.nextval,?,?,?,?)";
 		return template.update(sql,dto.getId(),dto.getPw(),dto.getName(),dto.getEmail());
 	}
+	
 	@Override
 	public int memberOut(String id) {
 		String sql = "delete from member where id=?";
@@ -45,6 +46,7 @@ public class MemberDAOImpl implements MemberDAO{
 
 		return result;
 	}
+	
 	@Override
 	public MemberDTO memberInfo(String id) {
 		String sql = "select * from member where id=?";

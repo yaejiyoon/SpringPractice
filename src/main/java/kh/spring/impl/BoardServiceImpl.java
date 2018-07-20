@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.interfaces.BoardDAO;
 import kh.spring.interfaces.BoardService;
 
@@ -43,6 +44,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int delete(int seq) {
 		return dao.delete(seq);
+	}
+
+	@Override
+	public int uploadFile(FilesDTO dto) {
+		return dao.uploadFile(dto);
+	}
+
+	@Override
+	public List<FilesDTO> getFiles(int article_no) {
+		return dao.getFiles(article_no);
 	}
 
 }
