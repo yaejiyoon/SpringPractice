@@ -41,7 +41,7 @@ textarea {
 </script>
 </head>
 <body>
-		<form action="writeProc.do" method="post">
+	<form action="writeProc.do" method="post" enctype="multipart/form-data">
 		<table border=1>
 			<tr>
 				<th colspan=5>자유게시판</th>
