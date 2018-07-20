@@ -30,10 +30,21 @@ public class BoardController {
 	}
 
 	@RequestMapping("/boardList.do")
-	public ModelAndView toBoardList() {
-		List<BoardDTO> result = service.getAllArticles();
+	public ModelAndView toBoardList(HttpServletRequest req) {
+		int currentPage = 0;
+		String currentPageString = req.getParameter("currentPage");
+
+		if (currentPageString == null) {
+			currentPage = 1;
+		} else {
+			currentPage = Integer.parseInt(currentPageString);
+		}
+
+		List<BoardDTO> result = service.getAllArticles(currentPage * 10 - 9, currentPage * 10);
+		String page = service.getBoardPageNavi(currentPage);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
+		mav.addObject("page",page);
 		mav.setViewName("boardList.jsp");
 		return mav;
 	}
@@ -108,7 +119,7 @@ public class BoardController {
 	@RequestMapping("/delete.do")
 	public ModelAndView toDelete(@RequestParam int seq) {
 		int result = service.delete(seq);
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
 		mav.setViewName("delete.jsp");
