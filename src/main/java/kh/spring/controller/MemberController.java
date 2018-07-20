@@ -40,7 +40,11 @@ public class MemberController {
 	
 	@RequestMapping("/login.do")
 	public ModelAndView login(String id, String pw, HttpSession session) {
-		boolean result = service.login(id, pw);
+		MemberDTO dto = new MemberDTO();
+		dto.setId(id);
+		dto.setPw(pw);
+		
+		boolean result = service.login(dto);
 		
 		System.out.println(result);
 		

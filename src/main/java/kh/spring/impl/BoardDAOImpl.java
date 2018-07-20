@@ -201,5 +201,7 @@ public class BoardDAOImpl implements BoardDAO {
 		String sql = "delete from comments where article_no=? and comment_seq=?";
 		return template.update(sql,articleNo,comment_seq);
 	}
+	
+	
 
 }
