@@ -25,19 +25,24 @@ textarea {
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-	$(document).ready(function() {
-		var cnt = 0;
-		$('#add').click(function() {
-			cnt++;
-			console.log(cnt);
-			$('#appendFile').after(
-					"<tr id='appendFile' align=center><td width=20% height=30><label>첨부파일</label></td><td><input type='file' name='file"+cnt+"'></td></tr>");
-			})
-			
-		$("#cancel").click(function(){
-			$(location).attr('href','index.do');
-		})
-	})
+	$(document)
+			.ready(
+					function() {
+						var cnt = 0;
+						$('#add')
+								.click(
+										function() {
+											cnt++;
+											console.log(cnt);
+											$('#appendFile')
+													.after(
+															"<tr id='appendFile' align=center><td width=20% height=30><label>첨부파일</label></td><td><input type='file' name='file"+cnt+"'></td></tr>");
+										})
+
+						$("#cancel").click(function() {
+							$(location).attr('href', 'index.do');
+						})
+					})
 </script>
 </head>
 <body>

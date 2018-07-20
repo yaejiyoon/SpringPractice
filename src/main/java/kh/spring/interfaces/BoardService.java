@@ -13,4 +13,7 @@ public interface BoardService {
 
 	public BoardDTO getArticle(int seq);
 
+	public int nextSeq();
+	
+	public int delete(int seq);
 }
