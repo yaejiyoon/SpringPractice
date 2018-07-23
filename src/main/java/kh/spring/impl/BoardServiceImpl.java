@@ -1,6 +1,7 @@
 package kh.spring.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ public class BoardServiceImpl implements BoardService{
 	private BoardDAO dao;
 	
 	@Override
-	public List<BoardDTO> getAllArticles(int startNum, int endNum) {
-		return dao.getAllArticles(startNum, endNum); 
+	public List<BoardDTO> getAllArticles(Map<String,Integer> map) {
+		return dao.getAllArticles(map); 
 	}
 
 	@Override
@@ -62,8 +63,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int commentRemove(int articleNo, int comment_seq) {
-		return dao.commentRemove(articleNo, comment_seq);
+	public int commentRemove(CommentDTO dto) {
+		return dao.commentRemove(dto);
 	}
 
 }

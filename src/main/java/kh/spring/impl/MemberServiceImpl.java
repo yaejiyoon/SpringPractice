@@ -27,12 +27,11 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public boolean login(MemberDTO dto) {
-		System.out.println("Service : " + dto.getPw());
 		return dao.login(dto);
 	}
 
 	@Override
-	public MemberDTO memberInfo(String id) {
+	public List<MemberDTO> memberInfo(String id) {
 		return dao.memberInfo(id);
 	}
 

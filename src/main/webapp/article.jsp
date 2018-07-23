@@ -120,7 +120,7 @@ a:hover {
 					<script>
 					
 						document.getElementById('commentRemove<%=count %>').onclick = function(){
-							location.href='commentRemove.do?articleNo=${commentList.articleNo}&commentNo=${commentList.comment_seq}';
+							location.href='commentRemove.do?articleNo=${commentList.article_no }&commentNo=${commentList.comment_seq}';
 						}
 					</script>
 					
@@ -133,7 +133,7 @@ a:hover {
 			
 			<tr align=center>
 				<td colspan=4 width=70%>
-				<input type=hidden value="${dto.seq }" name="articleNo">
+				<input type=hidden value="${dto.seq }" name="article_no">
 				<input type=hidden value="${dto.writer }" name="writer">
 				<textarea id="commentArea" name="comment_text" placeholder="댓글쓰기"></textarea></td>
 				<td><button type="button" id="commentBtn">댓글 등록</button></td>

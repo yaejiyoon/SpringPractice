@@ -3,7 +3,9 @@ package kh.spring.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,81 +21,44 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Autowired
 	private JdbcTemplate template;
+	
+	@Autowired
+	private SqlSessionTemplate template2;
 
 	@Override
-	public List<BoardDTO> getAllArticles(int startNum, int endNum) {
-		String sql = "select * from (select board.*, row_number() over(order by writedate) as num\r\n"
-				+ "from board )where (num between ? and ?)";
-		List<BoardDTO> result = template.query(sql, new RowMapper<BoardDTO>() {
-			@Override
-			public BoardDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				BoardDTO tmp = new BoardDTO();
-				tmp.setSeq(rs.getInt("seq"));
-				tmp.setTitle(rs.getString("title"));
-				tmp.setContents(rs.getString("contents"));
-				tmp.setWriter(rs.getString("writer"));
-				tmp.setWritedate(rs.getString("writedate"));
-				tmp.setViewcount(rs.getInt("viewcount"));
-				tmp.setIp(rs.getString("ip"));
-				return tmp;
-			}
-		}, startNum, endNum);
-		return result;
+	public List<BoardDTO> getAllArticles(Map<String,Integer> map) {
+	
+		return template2.selectList("Board.getAllArticles",map);
 	}
 
 	@Override
 	public int write(BoardDTO dto) {
-		String sql = "insert into board values(?,?,?,?,sysdate,?,?)";
-		return template.update(sql, dto.getSeq(), dto.getTitle(), dto.getContents(), dto.getWriter(),
-				dto.getViewcount(), dto.getIp());
+		return template2.insert("Board.write",dto);
 	}
 
 	@Override
 	public int modify(BoardDTO dto) {
-		System.out.println("dao:" + dto.getSeq() + ":" + dto.getTitle() + ":" + dto.getContents());
-		String sql = "update board set title=?, contents=?, writedate=sysdate where seq = ?";
-		return template.update(sql, dto.getTitle(), dto.getContents(), dto.getSeq());
+		return template2.update("Board.modify",dto);
 	}
 
 	@Override
 	public BoardDTO getArticle(int seq) {
-		String sql = "select * from board where seq = ?";
-		return template.queryForObject(sql, new RowMapper<BoardDTO>() {
-
-			@Override
-			public BoardDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				BoardDTO tmp = new BoardDTO();
-				tmp.setSeq(rs.getInt("seq"));
-				tmp.setTitle(rs.getString("title"));
-				tmp.setContents(rs.getString("contents"));
-				tmp.setViewcount(rs.getInt("viewcount"));
-				tmp.setWriter(rs.getString("writer"));
-				tmp.setWritedate(rs.getString("writedate"));
-				tmp.setIp(rs.getString("ip"));
-				return tmp;
-			}
-		}, seq);
+		return template2.selectOne("Board.getArticle",seq);
 	}
 
 	@Override
 	public int nextSeq() {
-		String sql = "select board_seq.nextval from dual";
-		int seq = template.queryForObject(sql, Integer.class);
-
-		return seq;
+		return template2.selectOne("Board.nextSeq");
 	}
 
 	@Override
 	public int delete(int seq) {
-		String sql = "delete from board where seq = ?";
-		int result = template.update(sql, seq);
-		return result;
+		return template2.delete("Board.delete",seq);
 	}
 
 	@Override
 	public String getBoardPageNavi(int currentPageNo) {
-		String sql = "select count(*) as totalCount from board";
-		int count = template.queryForObject(sql, Integer.class);
+		int count = template2.selectOne("Board.getBoardPageNavi");
 		System.out.println("navi: " + count);
 
 		int recordTotalCount = count;
@@ -165,41 +130,19 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int comment(CommentDTO dto) {
-		String sql = "insert into comments values(?,comment_seq.nextval,?,?,sysdate,'192.168')";
-		return template.update(sql,dto.getArticleNo(),dto.getComment_text(),dto.getWriter());
+		return template2.insert("Board.comment",dto);
 	}
 
 	
 	@Override
 	public List<CommentDTO> commentsList(int seq) {
-		String sql = "select * from comments where article_no = ?";
-
-		List<CommentDTO> result = template.query(sql, new RowMapper<CommentDTO>() {
-
-			@Override
-			public CommentDTO mapRow(ResultSet rs, int rownum) throws SQLException {
-				CommentDTO tmp = new CommentDTO();
-				
-				tmp.setArticleNo(rs.getInt("article_No"));
-	            tmp.setComment_seq(rs.getInt("comment_seq"));
-	            tmp.setComment_text(rs.getString("comment_text"));
-	            tmp.setWriter(rs.getString("writer"));
-	            tmp.setWriteDate(rs.getString("writeDate"));
-	            tmp.setIp(rs.getString("ip"));
-	            
-				return tmp;
-			}
-			
-		},seq);
-		
-		return result;
+		return template2.selectList("Board.commentsList",seq);
 		
 	}
 
 	@Override
-	public int commentRemove(int articleNo, int comment_seq) {
-		String sql = "delete from comments where article_no=? and comment_seq=?";
-		return template.update(sql,articleNo,comment_seq);
+	public int commentRemove(CommentDTO dto) {
+		return template2.delete("Board.commentRemove",dto);
 	}
 	
 	

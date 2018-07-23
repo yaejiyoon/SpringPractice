@@ -1,5 +1,7 @@
 package kh.spring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -88,7 +90,7 @@ public class MemberController {
 	public ModelAndView memberInfo(HttpServletRequest req) {
 		String id = req.getSession().getAttribute("loginId").toString();
 		
-		MemberDTO result = service.memberInfo(id);
+		List<MemberDTO> result = service.memberInfo(id);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
@@ -101,7 +103,7 @@ public class MemberController {
 	public ModelAndView infoModify(HttpServletRequest req) {
 		String id = req.getSession().getAttribute("loginId").toString();
 		
-		MemberDTO result = service.memberInfo(id);
+		List<MemberDTO> result = service.memberInfo(id);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+	<select id="getAllArticles" resultType="Board">
+		select * from (select board.*, row_number() over(order by writedate) as num from board) where (num between #{startNum} and #{endNum})
+	</select>
+	
+	<insert id="write" parameterType="Board">
+		insert into board values(#{seq},#{title},#{contents},#{writer},sysdate,#{viewcount},#{ip})
+	</insert>
+	
+	<update id="modify">
+		update board set title=#{title}, contents=#{contents}, writedate=sysdate where seq = #{seq}
+	</update>
+	
+	<select id="getArticle" resultType="Board">
+		select * from board where seq = #{seq}
+	</select>
+	
+	<select id="nextSeq" resultType="int">
+		select board_seq.nextval from dual
+	</select>
+	
+	<delete id="delete">
+		delete from board where seq=#{seq}
+	</delete>
+	
+	<select id="getBoardPageNavi" resultType="int">
+		select count(*) as totalCount from board
+	</select>
+	
+	<insert id="comment" parameterType="Comment">
+		insert into comments values(#{article_no},comment_seq.nextval,#{comment_text},#{writer},sysdate,'192.168')
+	</insert>
+	
+	<select id="commentsList" resultType="Comment">
+		select * from comments where article_no = #{seq}
+	</select>
+	
+	<delete id="commentRemove" parameterType="Comment">
+		delete from comments where article_no=#{article_no} and comment_seq=#{comment_seq}
+	</delete>
+	
+</mapper>

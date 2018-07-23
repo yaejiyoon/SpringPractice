@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,6 +30,7 @@
 </head>
 <body>
 	<div id="wrapper">
+		<c:forEach var="result" items="${result }">
 		<h3>회원 정보</h3>
 		<form action="modiProc.do" method="post">
 		<input type=hidden name=seq value="${result.seq }">
@@ -39,6 +41,7 @@
 		<button id="update">수정하기</button>
 		<button id="back" type=button>뒤로가기</button>
 		</form>
+		</c:forEach>
 	</div>
 </body>
 </html>

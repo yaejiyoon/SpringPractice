@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,28 +18,24 @@ import kh.spring.interfaces.MemberDAO;
 public class MemberDAOImpl implements MemberDAO{
 
 	@Autowired
-	private JdbcTemplate template;
+	//private JdbcTemplate template;
+	private SqlSessionTemplate template;
 	
 	@Override
 	public int joinMember(MemberDTO dto) {
-		String sql = "insert into member values(member_seq.nextval,?,?,?,?)";
-		return template.update(sql,dto.getId(),dto.getPw(),dto.getName(),dto.getEmail());
+		return template.insert("Member.joinMember",dto);
 	}
+	
 	@Override
 	public int memberOut(String id) {
-		String sql = "delete from member where id=?";
-		return template.update(sql,id);
+		return template.delete("Member.memberOut",id);
 	}
-
-
-
+	
 	@Override
 	public boolean login(MemberDTO dto) {
-		String sql = "select count(*) from member where id=? and pw=?";
 		boolean result = false;
 
-		int count = template.queryForObject(
-		                    sql, new Object[] { dto.getId(),dto.getPw() }, Integer.class);
+		int count = template.selectOne("Member.login",dto);
 
 		if (count > 0) {
 		    result = true;
@@ -47,33 +45,15 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 	
 	@Override
-	public MemberDTO memberInfo(String id) {
-		String sql = "select * from member where id=?";
-
-	      RowMapper<MemberDTO> mapper = new RowMapper<MemberDTO>() {
-	         public MemberDTO mapRow(ResultSet rs, int rowNum) {
-	        	 MemberDTO tmp = new MemberDTO();
-	            try {
-	               tmp.setSeq(rs.getInt("seq"));
-	               tmp.setId(rs.getString("id"));
-	               tmp.setPw(rs.getString("pw"));
-	               tmp.setName(rs.getString("name"));
-	               tmp.setEmail(rs.getString("email"));
-	               
-	            } catch (SQLException e) {
-	               e.printStackTrace();
-	            }
-	            return tmp;
-	         }
-	      };
-
-	      return this.template.queryForObject(sql, mapper, id);
+	public List<MemberDTO> memberInfo(String id) {
+		
+		return template.selectList("Member.memberInfo",id);
 
 	}
+	
 	@Override
 	public int infoModify(MemberDTO dto) {
-		String sql = "update member set pw=?,name=?,email=? where seq=?";
-		return template.update(sql,dto.getPw(),dto.getName(),dto.getEmail(),dto.getSeq());
+		return template.update("Member.infoModify",dto);
 	}
 	
 

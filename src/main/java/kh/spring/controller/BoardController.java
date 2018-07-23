@@ -1,6 +1,8 @@
 package kh.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,8 +42,12 @@ public class BoardController {
 		} else {
 			currentPage = Integer.parseInt(currentPageString);
 		}
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("startNum", currentPage * 10 - 9);
+		map.put("endNum", currentPage * 10);
 
-		List<BoardDTO> result = service.getAllArticles(currentPage * 10 - 9, currentPage * 10);
+		List<BoardDTO> result = service.getAllArticles(map);
 		String page = service.getBoardPageNavi(currentPage);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
@@ -56,6 +62,7 @@ public class BoardController {
 		BoardDTO dto = service.getArticle(seq);
 		
 		List<CommentDTO> commentList = service.commentsList(seq);
+		
 		System.out.println("commentList : "+commentList.size());
 
 		ModelAndView mav = new ModelAndView();
@@ -134,7 +141,9 @@ public class BoardController {
 	@RequestMapping("/comment.do")
 	public ModelAndView comment(CommentDTO dto) {
 		int result = service.comment(dto);
-		int seq = dto.getArticleNo();
+		int seq = dto.getArticle_no();
+		
+		System.out.println("commentdo no : "+seq);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("seq", seq);
@@ -146,10 +155,20 @@ public class BoardController {
 	
 	@RequestMapping("/commentRemove.do")
 	public ModelAndView commentRemove(String articleNo, String commentNo) {
+		
 		int article_no = Integer.parseInt(articleNo);
 		int comment_seq = Integer.parseInt(commentNo);
 		
-		int result = service.commentRemove(article_no, comment_seq);
+		System.out.println("article_no" + article_no);
+		System.out.println("articleNo"+articleNo);
+		
+		CommentDTO dto = new CommentDTO();
+		dto.setArticle_no(article_no);
+		dto.setComment_seq(comment_seq);
+		
+		System.out.println(dto.getComment_seq());
+		System.out.println(dto.getArticle_no());
+		int result = service.commentRemove(dto);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);

@@ -1,12 +1,13 @@
 package kh.spring.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.CommentDTO;
 
 public interface BoardDAO {
-	public List<BoardDTO> getAllArticles(int startNum, int endNum);
+	public List<BoardDTO> getAllArticles(Map<String,Integer> map);
 	
 	public int write(BoardDTO dto);
 	
@@ -24,5 +25,5 @@ public interface BoardDAO {
 	
 	public List<CommentDTO> commentsList(int seq);
 	
-	public int commentRemove(int articleNo, int comment_seq);
+	public int commentRemove(CommentDTO dto);
 }
