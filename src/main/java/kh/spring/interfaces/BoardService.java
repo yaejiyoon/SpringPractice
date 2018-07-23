@@ -25,12 +25,12 @@ public interface BoardService {
 
 	public String getBoardPageNavi(int currentPageNo);
 	
-	public int delete(int seq);
+	public int commentRemove(int articleNo, int comment_seq);
 	
 	// File Upload
 	
 	public int uploadFile(FilesDTO dto);
 	
 	public List<FilesDTO> getFiles(int article_no);
-	public int commentRemove(int articleNo, int comment_seq);
+	
 }
