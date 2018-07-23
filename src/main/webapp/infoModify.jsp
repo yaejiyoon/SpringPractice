@@ -37,7 +37,7 @@
 		이름 : <input type="text" name="name" value="${result.name }"><br>
 		이메일 : <input type="text" name="email" value="${result.email }"><br>
 		<button id="update">수정하기</button>
-		<button id="back">뒤로가기</button>
+		<button id="back" type=button>뒤로가기</button>
 		</form>
 	</div>
 </body>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.FilesDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.interfaces.BoardDAO;
 import kh.spring.interfaces.BoardService;
 
@@ -17,8 +18,8 @@ public class BoardServiceImpl implements BoardService{
 	private BoardDAO dao;
 	
 	@Override
-	public List<BoardDTO> getAllArticles() {
-		return dao.getAllArticles(); 
+	public List<BoardDTO> getAllArticles(int startNum, int endNum) {
+		return dao.getAllArticles(startNum, endNum); 
 	}
 
 	@Override
@@ -54,6 +55,26 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<FilesDTO> getFiles(int article_no) {
 		return dao.getFiles(article_no);
+	}
+
+	@Override
+	public String getBoardPageNavi(int currentPageNo) {
+		return dao.getBoardPageNavi(currentPageNo);
+	}
+
+	@Override
+	public int comment(CommentDTO dto) {
+		return dao.comment(dto);
+	}
+
+	@Override
+	public List<CommentDTO> commentsList(int seq) {
+		return dao.commentsList(seq);
+	}
+
+	@Override
+	public int commentRemove(int articleNo, int comment_seq) {
+		return dao.commentRemove(articleNo, comment_seq);
 	}
 
 }

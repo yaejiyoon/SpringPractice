@@ -33,12 +33,12 @@ public class MemberDAOImpl implements MemberDAO{
 
 
 	@Override
-	public boolean login(String id, String pw) {
+	public boolean login(MemberDTO dto) {
 		String sql = "select count(*) from member where id=? and pw=?";
 		boolean result = false;
 
 		int count = template.queryForObject(
-		                    sql, new Object[] { id,pw }, Integer.class);
+		                    sql, new Object[] { dto.getId(),dto.getPw() }, Integer.class);
 
 		if (count > 0) {
 		    result = true;

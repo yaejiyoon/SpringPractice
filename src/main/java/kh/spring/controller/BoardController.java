@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.interfaces.BoardService;
 
@@ -41,10 +42,21 @@ public class BoardController {
 	}
 
 	@RequestMapping("/boardList.do")
-	public ModelAndView toBoardList() {
-		List<BoardDTO> result = service.getAllArticles();
+	public ModelAndView toBoardList(HttpServletRequest req) {
+		int currentPage = 0;
+		String currentPageString = req.getParameter("currentPage");
+
+		if (currentPageString == null) {
+			currentPage = 1;
+		} else {
+			currentPage = Integer.parseInt(currentPageString);
+		}
+
+		List<BoardDTO> result = service.getAllArticles(currentPage * 10 - 9, currentPage * 10);
+		String page = service.getBoardPageNavi(currentPage);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
+		mav.addObject("page",page);
 		mav.setViewName("boardList.jsp");
 		return mav;
 	}
@@ -55,7 +67,12 @@ public class BoardController {
 		BoardDTO dto = service.getArticle(seq);
 		List<FilesDTO> files = service.getFiles(seq);
 		
+		
+		List<CommentDTO> commentList = service.commentsList(seq);
+		System.out.println("commentList : "+commentList.size());
+
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("commentList", commentList);
 		mav.addObject("dto", dto);
 		mav.addObject("files", files);
 		mav.setViewName("article.jsp");
@@ -188,7 +205,7 @@ public class BoardController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
-		mav.setViewName("article.do?seq=" + seq + "");
+		mav.setViewName("article.do?seq=" + seq );
 
 		return mav;
 	}
@@ -196,10 +213,38 @@ public class BoardController {
 	@RequestMapping("/delete.do")
 	public ModelAndView toDelete(@RequestParam int seq) {
 		int result = service.delete(seq);
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
 		mav.setViewName("delete.jsp");
 		return mav;
 	}
+	
+	@RequestMapping("/comment.do")
+	public ModelAndView comment(CommentDTO dto) {
+		int result = service.comment(dto);
+		int seq = dto.getArticleNo();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("seq", seq);
+		mav.addObject("result", result);
+		mav.setViewName("commentProc.jsp");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/commentRemove.do")
+	public ModelAndView commentRemove(String articleNo, String commentNo) {
+		int article_no = Integer.parseInt(articleNo);
+		int comment_seq = Integer.parseInt(commentNo);
+		
+		int result = service.commentRemove(article_no, comment_seq);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("result", result);
+		mav.setViewName("article.do?seq=" + article_no );
+		
+		return mav;
+	}
+	
 }

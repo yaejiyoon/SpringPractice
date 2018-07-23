@@ -26,8 +26,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public boolean login(String id, String pw) {
-		return dao.login(id, pw);
+	public boolean login(MemberDTO dto) {
+		System.out.println("Service : " + dto.getPw());
+		return dao.login(dto);
 	}
 
 	@Override
